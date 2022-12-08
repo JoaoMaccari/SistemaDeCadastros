@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using SistemaCadastro.Data;
 
 namespace SistemaCadastro;
@@ -15,8 +16,12 @@ public class Startup {
 
 
         services.AddEntityFrameworkSqlServer()
-            .AddDbContext<BancoContext>();
+            .AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
+    }
+
+    private void UseSqlServer(string? v) {
+        throw new NotImplementedException();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
