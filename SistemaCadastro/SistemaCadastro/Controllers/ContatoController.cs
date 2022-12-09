@@ -1,9 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemaCadastro.Models;
+using SistemaCadastro.Repositorios;
 
 namespace SistemaCadastro.Controllers {
     public class ContatoController : Controller {
+
+        private readonly IContatoRepositorio _contatoRepositorio;
+        public ContatoController(IContatoRepositorio contatoRepositorio) {
+
+            _contatoRepositorio = contatoRepositorio;
+        }
+
+
         public IActionResult Index() {
-            return View();
+          List<ContatoModel> contatos =  _contatoRepositorio.BuscarTotos();
+
+            return View(contatos);
         }
 
 
@@ -21,6 +33,12 @@ namespace SistemaCadastro.Controllers {
 
         public IActionResult Apagar() {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Criar(ContatoModel Contato) {
+            _contatoRepositorio.Adicionar(Contato);
+            return RedirectToAction("Index");
         }
 
     }

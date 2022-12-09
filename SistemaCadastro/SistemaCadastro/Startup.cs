@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SistemaCadastro.Data;
+using SistemaCadastro.Repositorios;
 
 namespace SistemaCadastro;
 public class Startup {
@@ -17,6 +18,7 @@ public class Startup {
 
         services.AddEntityFrameworkSqlServer()
             .AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
+        services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
 
     }
 
