@@ -6,6 +6,7 @@ namespace SistemaCadastro.Controllers {
     public class ContatoController : Controller {
 
         private readonly IContatoRepositorio _contatoRepositorio;
+
         public ContatoController(IContatoRepositorio contatoRepositorio) {
 
             _contatoRepositorio = contatoRepositorio;
@@ -23,21 +24,33 @@ namespace SistemaCadastro.Controllers {
             return View();
         }
 
-        public IActionResult Editar() {
-            return View();
+        public IActionResult Editar(int id) {
+            ContatoModel contato =  _contatoRepositorio.ListarPorId(id);
+
+            
+            return View(contato);
         }
 
-        public IActionResult ApagarConfirmacao() {
-            return View();
+        public IActionResult ApagarConfirmacao(int id) {
+
+            ContatoModel contato = _contatoRepositorio.ListarPorId(id);
+            return View(contato);
         }
 
-        public IActionResult Apagar() {
-            return View();
+        public IActionResult Apagar(int id) {
+
+            _contatoRepositorio.Apagar(id);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult Criar(ContatoModel Contato) {
             _contatoRepositorio.Adicionar(Contato);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Alterar(ContatoModel contato) {
+            _contatoRepositorio.Atualizar(contato);
             return RedirectToAction("Index");
         }
 

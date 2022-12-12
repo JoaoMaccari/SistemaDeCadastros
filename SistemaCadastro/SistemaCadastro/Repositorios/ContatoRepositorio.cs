@@ -11,6 +11,11 @@ namespace SistemaCadastro.Repositorios {
             _bancoContext = bancoContext;
         }
 
+
+        public ContatoModel ListarPorId(int id) {
+            return _bancoContext.Contatos.FirstOrDefault(x => x.Id == id);
+        }
+
         public ContatoModel Adicionar(ContatoModel contato) {
             
             _bancoContext.Contatos.Add( contato );
@@ -20,6 +25,31 @@ namespace SistemaCadastro.Repositorios {
 
         public List<ContatoModel> BuscarTotos() {
             return _bancoContext.Contatos.ToList();
+        }
+
+        public ContatoModel Atualizar(ContatoModel contato) {
+            ContatoModel contatoDB = ListarPorId(contato.Id);
+
+            if (contatoDB == null) throw new System.Exception("Houve um erro na atualização do contato");
+
+            contatoDB.Nome = contato.Nome;
+            contatoDB.Email= contato.Email;
+            contato.Celular= contato.Celular;
+
+            _bancoContext.Contatos.Update(contatoDB);
+            _bancoContext.SaveChanges();
+
+            return contatoDB;
+        }
+
+        public bool Apagar(int id) {
+            ContatoModel contatoDB = ListarPorId(id);
+
+            if (contatoDB == null) throw new System.Exception("Houve um erro na deleção do contato");
+
+            _bancoContext.Contatos.Remove(contatoDB);
+            _bancoContext.SaveChanges();
+            return true;
         }
     }
 }
