@@ -12,20 +12,25 @@
 
 
  <form asp-controller="Contato" asp-action="Alterar" method="post">
+
     <input type="hidden" asp-for="Id"/>
+
   <div class="mb-3">
     <label for="nome" class="form-label">Nome</label>
     <input type="text" class="form-control" asp-for=Nome  placeholder="Digite seu nome do contato">
+            @Html.ValidationMessageFor(x => x.Nome)
   </div>
   
   <div class="mb-3">
     <label for="email" class="form-label">E-mail</label>
     <input type="text" class="form-control" asp-for="Email"  placeholder="Digite o email do contato">
+            @Html.ValidationMessageFor(x => x.Email)
   </div>
 
    <div class="mb-3">
     <label for="celular" class="form-label">Celular</label>
-    <input type="text" class="form-control" asp-for=Celular  placeholder="Digite o celular do contato">
+    <input type="number" class="form-control" asp-for=Celular  placeholder="Digite o celular do contato">
+            @Html.ValidationMessageFor(x => x.Celular)
 
   </div>
 
