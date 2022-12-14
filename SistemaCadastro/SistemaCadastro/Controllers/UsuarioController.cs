@@ -17,7 +17,7 @@ namespace SistemaCadastro.Controllers {
 
             List<UsuarioModel> usuarios = _usuarioRepositorio.BuscarTotos();
 
-            return View();
+            return View(usuarios);
         }
 
 
@@ -39,6 +39,7 @@ namespace SistemaCadastro.Controllers {
                 }
 
                 return View(usuario);
+
             }
             catch (Exception erro) {
                 TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar seu usuário. Detalhe erro: {erro.Message}";
