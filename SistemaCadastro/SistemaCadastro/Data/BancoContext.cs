@@ -1,4 +1,4 @@
-﻿ using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SistemaCadastro.Models;
 
 namespace SistemaCadastro.Data {
@@ -9,6 +9,8 @@ namespace SistemaCadastro.Data {
         }
 
         public DbSet<ContatoModel> Contatos { get; set; }   
+
+        public DbSet<UsuarioModel> Usuarios { get; set; }
 
     }
 }

@@ -19,6 +19,7 @@ public class Startup {
         services.AddEntityFrameworkSqlServer()
             .AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
         services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
+        services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 
     }
 
