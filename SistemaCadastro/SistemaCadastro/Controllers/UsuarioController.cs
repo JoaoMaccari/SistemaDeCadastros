@@ -93,6 +93,7 @@ namespace SistemaCadastro.Controllers {
                 if (ModelState.IsValid) {
 
                     usuario = new UsuarioModel() {
+
                         Id = usuarioSemSenhaModel.Id,
                         Nome = usuarioSemSenhaModel.Nome,
                         Login = usuarioSemSenhaModel.Login,
@@ -105,7 +106,7 @@ namespace SistemaCadastro.Controllers {
                     return RedirectToAction("Index");
                 }
 
-                return View("Editar", usuario);
+                return View(usuario);
 
             }
             catch (Exception erro) {
