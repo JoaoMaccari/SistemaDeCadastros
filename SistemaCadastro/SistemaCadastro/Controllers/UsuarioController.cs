@@ -26,6 +26,14 @@ namespace SistemaCadastro.Controllers {
         }
 
 
+        public IActionResult Editar(int id) {
+            UsuarioModel usuario = _usuarioRepositorio.ListarPorId(id);
+
+
+            return View(usuario);
+        }
+
+
         [HttpPost]
         public IActionResult Criar(UsuarioModel usuario) {
 
@@ -47,5 +55,68 @@ namespace SistemaCadastro.Controllers {
             }
 
         }
+
+
+        public IActionResult ApagarConfirmacao(int id) {
+
+            UsuarioModel usuario = _usuarioRepositorio.ListarPorId(id);
+            return View(usuario);
+        }
+
+        public IActionResult Apagar(int id) {
+
+            try {
+                bool apagado = _usuarioRepositorio.Apagar(id);
+
+                if (apagado) {
+                    TempData["MensagemSucesso"] = "Usuário apagado com sucesso.";
+                }
+                else {
+                    TempData["MensagemErro"] = $"Ops, não conseguimos apagar seu usuário.";
+                }
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception erro) {
+
+                TempData["MensagemErro"] = $"Ops, não conseguimos apagar o usuário. Detalhe erro: {erro.Message}";
+                return RedirectToAction("index");
+            }
+        }
+
+        public IActionResult Alterar(UsuarioSemSenhaModel usuarioSemSenhaModel) {
+
+            try {
+
+                UsuarioModel usuario = null;
+
+                if (ModelState.IsValid) {
+
+                    usuario = new UsuarioModel() {
+                        Id = usuarioSemSenhaModel.Id,
+                        Nome = usuarioSemSenhaModel.Nome,
+                        Login = usuarioSemSenhaModel.Login,
+                        Email = usuarioSemSenhaModel.Email,
+                        Perfil = usuarioSemSenhaModel.Perfil
+                    };
+                   
+                    _usuarioRepositorio.Atualizar(usuario);
+                    TempData["MensagemSucesso"] = "Usuario alterado com sucesso.";
+                    return RedirectToAction("Index");
+                }
+
+                return View("Editar", usuario);
+
+            }
+            catch (Exception erro) {
+                TempData["MensagemErro"] = $"Ops, erro ao editar o contato. Detalhe erro: {erro.Message}";
+                return RedirectToAction("Index");
+            }
+
+        }
+
+
+
+
     }
 }
